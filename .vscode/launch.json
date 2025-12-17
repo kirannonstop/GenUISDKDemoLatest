@@ -1,0 +1,18 @@
+//create for run to web and GEMINI_API_KEY = 'AIzaSyBsYDoxcc8vIJpsBdNlXEU8I-kt5NgmZj8'
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter Web",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "-d",
+                "chrome",
+                "-D",
+                "GEMINI_API_KEY=AIzaSyBgKIaHJqU4SiLzOZtvAaug0eZlC3hEWps"
+            ]
+        }
+    ]
+}

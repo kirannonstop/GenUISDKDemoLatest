@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219742159046",
+    "project_id": "geuuidemo",
+    "storage_bucket": "geuuidemo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219742159046:android:0cbd135b8563625f3057c7",
+        "android_client_info": {
+          "package_name": "com.example.genui_sdk_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2c2THZ_G7rs2T1f-BhZFq2hQZ753-gQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

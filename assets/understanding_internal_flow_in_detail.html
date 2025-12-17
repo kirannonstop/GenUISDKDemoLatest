@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenUI Flow - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #059D66 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #059D66;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .intro-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .intro-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        
+        .step-container {
+            margin: 50px 0;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 6px solid #667eea;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .step h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            margin-left: 70px;
+            font-size: 1.8em;
+        }
+        
+        .step-content {
+            margin-top: 20px;
+        }
+        
+        .step-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .code-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; font-style: italic; }
+        .function { color: #50fa7b; }
+        .number { color: #bd93f9; }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .highlight-box strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .highlight-box p {
+            color: #856404;
+            margin: 5px 0;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box strong {
+            color: #1565c0;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .info-box p {
+            color: #1565c0;
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        
+        .arrow-down {
+            text-align: center;
+            font-size: 3em;
+            color: #667eea;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .visual-tree {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #ddd;
+        }
+        
+        .tree-line {
+            padding: 5px 0;
+            color: #333;
+        }
+        
+        .tree-indent-1 { margin-left: 20px; }
+        .tree-indent-2 { margin-left: 40px; }
+        .tree-indent-3 { margin-left: 60px; }
+        .tree-indent-4 { margin-left: 80px; }
+        
+        .tree-component { color: #059D66; font-weight: bold; }
+        .tree-id { color: #666; }
+        .tree-value { color: #d63384; }
+        
+        .data-structure {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .data-structure h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .final-result {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .final-result h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .recipe-card-demo {
+            background: white;
+            color: #333;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .recipe-card-demo h4 {
+            color: #059D66;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .recipe-card-demo .recipe-meta {
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+        
+        .recipe-card-demo .ingredients {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        
+        .bullet-list {
+            margin: 15px 0 15px 30px;
+            line-height: 2;
+        }
+        
+        .bullet-list li {
+            color: #555;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🥑 GenUI Flow: Complete Walkthrough</h1>
+        
+        <div class="intro-section">
+            <h2>Example: "Suggest a healthy breakfast"</h2>
+            <p>Let's follow exactly what happens when a user asks for breakfast suggestions</p>
+            <p style="margin-top: 15px; font-size: 1.1em;">
+                <strong>Using GenUI SDK's Default Catalog</strong><br>
+                (card, column, text, button, image, etc.)
+            </p>
+        </div>
+        
+        <!-- CATALOG EXPLANATION -->
+        <div class="section" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%); color: white; border: none;">
+            <h2 style="color: white; margin-bottom: 20px;">📚 Understanding the Catalog</h2>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">What is a Catalog?</h3>
+                <p style="color: white; line-height: 1.8; font-size: 1.05em;">
+                    A <strong>Catalog</strong> is a collection of pre-defined widgets that the AI can use to build UIs.
+                    GenUI SDK comes with 18 built-in catalog items (widgets) that cover most common UI needs.
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">GenUI SDK's Default Catalog Items:</h3>
+                <div class="code-block" style="margin-top: 15px;">
+<span class="comment">// From GenUI SDK source code:</span>
+<span class="keyword">static</span> Catalog <span class="function">asCatalog</span>() {
+  <span class="keyword">return</span> <span class="function">Catalog</span>([
+    audioPlayer,   <span class="comment">// Play audio files</span>
+    button,        <span class="comment">// Clickable buttons</span>
+    card,          <span class="comment">// Material card wrapper</span>
+    checkBox,      <span class="comment">// Checkbox input</span>
+    column,        <span class="comment">// Vertical layout</span>
+    dateTimeInput, <span class="comment">// Date/time picker</span>
+    divider,       <span class="comment">// Visual separator</span>
+    icon,          <span class="comment">// Material icons</span>
+    image,         <span class="comment">// Display images</span>
+    list,          <span class="comment">// Scrollable list</span>
+    modal,         <span class="comment">// Dialog/popup</span>
+    multipleChoice,<span class="comment">// Radio buttons/chips</span>
+    row,           <span class="comment">// Horizontal layout</span>
+    slider,        <span class="comment">// Value slider</span>
+    tabs,          <span class="comment">// Tab navigation</span>
+    text,          <span class="comment">// Display text</span>
+    textField,     <span class="comment">// Text input</span>
+    video,         <span class="comment">// Video player</span>
+  ]);
+}</div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.3em;">How It Works:</h3>
+                <ul style="margin-left: 25px; line-height: 2; font-size: 1.05em;">
+                    <li><strong>You provide the catalog</strong> to GenUiConversation when initializing</li>
+                    <li><strong>AI sees the catalog</strong> and knows which widgets it can use</li>
+                    <li><strong>AI composes UIs</strong> by combining these catalog items</li>
+                    <li><strong>SDK builds widgets</strong> using the catalog item's builder function</li>
+                </ul>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 12px; margin-top: 20px;">
+                <p style="color: white; font-size: 1.15em; line-height: 1.8; text-align: center;">
+                    <strong>💡 Key Point:</strong> In this example, we're using GenUI's <strong>default catalog items</strong>.<br>
+                    The AI combines <code>card</code>, <code>column</code>, and <code>text</code> to build the breakfast UI.<br>
+                    <strong>No custom widgets needed!</strong>
+                </p>
+            </div>
+        </div>
+        
+        <div class="step-container">
+            
+            <!-- STEP 1 -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <h2>User Types Message</h2>
+                <div class="step-content">
+                    <p>User opens the app and types: <strong>"Suggest a healthy breakfast"</strong></p>
+                    
+                    <p>In your Flutter code, when user presses send:</p>
+                    
+                    <div class="code-block">
+                        <div class="code-label">Your Flutter Code</div>
+<span class="comment">// In your ChatScreen.dart</span>
+
+<span class="comment">// Step 1: Initialize GenUiConversation with the default catalog</span>
+<span class="keyword">final</span> _genUiConversation = <span class="function">GenUiConversation</span>(
+  contentGenerator: myContentGenerator,
+  catalog: CoreCatalog.<span class="function">asCatalog</span>(), <span class="comment">// ← The 18 built-in widgets!</span>
+);
+
+<span class="comment">// Step 2: Send user message</span>
+<span class="keyword">void</span> <span class="function">_sendMessage</span>() {
+  <span class="keyword">final</span> text = _textController.text; <span class="comment">// "Suggest a healthy breakfast"</span>
+  
+  <span class="comment">// Send to GenUiConversation</span>
+  _genUiConversation.<span class="function">sendRequest</span>(
+    <span class="function">UserMessage</span>([<span class="function">TextPart</span>(text)])
+  );
+}</div>
+
+                    <div class="highlight-box">
+                        <strong>📌 What Happens Here:</strong>
+                        <p>• You initialized GenUiConversation with <code>CoreCatalog.asCatalog()</code></p>
+                        <p>• This gives AI access to 18 built-in widgets (card, column, text, etc.)</p>
+                        <p>• Your app wraps user text in a <code>UserMessage</code> object</p>
+                        <p>• Sends it to <code>GenUiConversation</code> (the mediator)</p>
+                        <p>• GenUiConversation adds it to conversation history</p>
+                    </div>
+                    
+                    <p><strong>Message Format Sent:</strong></p>
+                    <div class="code-block">
+                        <div class="code-label">JSON</div>
+{
+  <span class="string">"parts"</span>: [
+    {
+      <span class="string">"text"</span>: <span class="string">"Suggest a healthy breakfast"</span>
+    }
+  ],
+  <span class="string">"role"</span>: <span class="string">"user"</span>
+}</div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- STEP 2 -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <h2>AI Returns Component Structure</h2>
+                <div class="step-content">
+                    <p>GenUiConversation forwards the message to <strong>ContentGenerator</strong>, which talks to Google AI.</p>
+                    
+                    <p><strong>Important:</strong> ContentGenerator also sends the <strong>catalog schema</strong> to AI, so AI knows which widgets it can use!</p>
+                    
+                    <div class="code-block">
+                        <div class="code-label">What Gets Sent to AI</div>
+{
+  <span class="string">"systemInstruction"</span>: <span class="string">"You're a helpful assistant..."</span>,
+  <span class="string">"tools"</span>: [
+    {
+      <span class="string">"name"</span>: <span class="string">"card"</span>,
+      <span class="string">"schema"</span>: {<span class="comment">/* Card widget properties */</span>}
+    },
+    {
+      <span class="string">"name"</span>: <span class="string">"column"</span>,
+      <span class="string">"schema"</span>: {<span class="comment">/* Column widget properties */</span>}
+    },
+    {
+      <span class="string">"name"</span>: <span class="string">"text"</span>,
+      <span class="string">"schema"</span>: {<span class="comment">/* Text widget properties */</span>}
+    },
+    <span class="comment">// ... all 18 catalog items</span>
+  ],
+  <span class="string">"messages"</span>: [
+    {
+      <span class="string">"role"</span>: <span class="string">"user"</span>,
+      <span class="string">"text"</span>: <span class="string">"Suggest a healthy breakfast"</span>
+    }
+  ]
+}</div>
+                    
+                    <p>AI thinks: <em>"User wants breakfast. I can use the <strong>card</strong>, <strong>column</strong>, and <strong>text</strong> catalog items to build a nice breakfast UI!"</em></p>
+                    
+                    <p><strong>AI returns a function call named <code>surfaceUpdate</code>:</strong></p>
+                    
+                    <div class="code-block">
+                        <div class="code-label">AI Response</div>
+<span class="function">FunctionCall</span>(
+  name: <span class="string">"surfaceUpdate"</span>,
+  args: {
+    <span class="string">"surfaceId"</span>: <span class="string">"breakfast_healthy_1"</span>,
+    <span class="string">"components"</span>: [
+      <span class="comment">// Component 1: The Card wrapper</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"card_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Card"</span>: {
+            <span class="string">"child"</span>: <span class="string">"column_avocado_toast"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 2: Column to hold all content</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"column_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Column"</span>: {
+            <span class="string">"alignment"</span>: <span class="string">"start"</span>,
+            <span class="string">"children"</span>: {
+              <span class="string">"explicitList"</span>: [
+                <span class="string">"title_avocado_toast"</span>,
+                <span class="string">"desc_avocado_toast"</span>,
+                <span class="string">"time_avocado_toast"</span>,
+                <span class="string">"ingredients_header"</span>,
+                <span class="string">"ingredients_list"</span>,
+                <span class="string">"nutrition_avocado_toast"</span>
+              ]
+            }
+          }
+        }
+      },
+      
+      <span class="comment">// Component 3: Title text</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"title_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Avocado Toast with Poached Eggs"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"h2"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 4: Description</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"desc_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"A nutritious breakfast with healthy fats and protein"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"body"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 5: Time info</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"time_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Prep Time: 5 mins | Cook Time: 10 mins"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"caption"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 6: Ingredients header</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"ingredients_header"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Key Ingredients:"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"h5"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 7: Ingredients list</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"ingredients_list"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"- Whole grain bread\n- Ripe avocado\n- Fresh eggs\n- Cherry tomatoes\n- Salt and pepper"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"body"</span>
+          }
+        }
+      },
+      
+      <span class="comment">// Component 8: Nutrition info</span>
+      {
+        <span class="string">"id"</span>: <span class="string">"nutrition_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"Text"</span>: {
+            <span class="string">"text"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Approx. 350 calories, 18g protein, 20g healthy fats"</span>
+            },
+            <span class="string">"usageHint"</span>: <span class="string">"body"</span>
+          }
+        }
+      }
+    ]
+  }
+)</div>
+
+                    <div class="highlight-box">
+                        <strong>🎯 Key Points:</strong>
+                        <p>• <strong>surfaceId:</strong> "breakfast_healthy_1" - unique identifier for this UI surface</p>
+                        <p>• <strong>components:</strong> Array of 8 UI components (1 Card, 1 Column, 6 Text widgets)</p>
+                        <p>• <strong>id:</strong> Each component has unique ID like "card_avocado_toast"</p>
+                        <p>• <strong>component:</strong> Uses catalog item names: "Card", "Column", "Text"</p>
+                        <p>• <strong>Hierarchy:</strong> Card → Column → Text widgets (from default catalog)</p>
+                        <p>• <strong>AI chose these:</strong> From the 18 available catalog items!</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>💡 Why This Structure?</strong>
+                        <p>AI is composing a widget tree using the <strong>catalog items you provided</strong>!</p>
+                        <p>• <strong>Card</strong> catalog item - wraps content in Material card</p>
+                        <p>• <strong>Column</strong> catalog item - arranges children vertically</p>
+                        <p>• <strong>Text</strong> catalog item - displays text with styling</p>
+                        <p>Just like you would write: <code>Card(child: Column(children: [Text(...), Text(...)]))</code></p>
+                        <p>But AI sends it as JSON structure using catalog item names.</p>
+                    </div>
+                    
+                    <p><strong>Visual Representation of Component Tree:</strong></p>
+                    <div class="visual-tree">
+                        <div class="tree-line">
+                            <span class="tree-component">Card</span> 
+                            <span class="tree-id">(id: "card_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-1">
+                            └─ <span class="tree-component">Column</span> 
+                            <span class="tree-id">(id: "column_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            ├─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "title_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            │   └─ <span class="tree-value">"Avocado Toast with Poached Eggs"</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            ├─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "desc_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            │   └─ <span class="tree-value">"A nutritious breakfast..."</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            ├─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "time_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            │   └─ <span class="tree-value">"Prep Time: 5 mins | Cook Time: 10 mins"</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            ├─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "ingredients_header")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            │   └─ <span class="tree-value">"Key Ingredients:"</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            ├─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "ingredients_list")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            │   └─ <span class="tree-value">"- Whole grain bread\n- Ripe avocado..."</span>
+                        </div>
+                        <div class="tree-line tree-indent-2">
+                            └─ <span class="tree-component">Text</span> 
+                            <span class="tree-id">(id: "nutrition_avocado_toast")</span>
+                        </div>
+                        <div class="tree-line tree-indent-3">
+                            └─ <span class="tree-value">"Approx. 350 calories, 18g protein..."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- STEP 3 -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <h2>GenUiManager Stores in DataModel</h2>
+                <div class="step-content">
+                    <p>The <strong>GenUiManager</strong> receives the surfaceUpdate function call and processes it.</p>
+                    
+                    <p><strong>What happens in the logs:</strong></p>
+                    <div class="code-block">
+                        <div class="code-label">Console Logs</div>
+[<span class="keyword">FINE</span>] Processing function call: <span class="function">surfaceUpdate</span> with args: Struct()
+[<span class="keyword">FINE</span>] Invoking tool: <span class="function">surfaceUpdate</span>
+[<span class="keyword">FINE</span>] Adding new surface <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">INFO</span>] Adding surface <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">INFO</span>] Invoked tool surfaceUpdate with args {
+  components: [
+    {id: card_avocado_toast, component: {Card: {...}}},
+    {id: column_avocado_toast, component: {Column: {...}}},
+    {id: title_avocado_toast, component: {Text: {...}}},
+    <span class="comment">// ... all other components</span>
+  ],
+  surfaceId: <span class="string">breakfast_healthy_1</span>
+}
+Result: {
+  surfaceId: <span class="string">breakfast_healthy_1</span>, 
+  status: <span class="string">"UI Surface breakfast_healthy_1 updated."</span>
+}</div>
+
+                    <div class="highlight-box">
+                        <strong>📦 What's Being Stored:</strong>
+                        <p>• GenUiManager stores all components in the <strong>DataModel</strong></p>
+                        <p>• Key is the <strong>surfaceId</strong> ("breakfast_healthy_1")</p>
+                        <p>• Value is the complete component tree structure</p>
+                    </div>
+                    
+                    <p><strong>DataModel Structure After Storage:</strong></p>
+                    <div class="data-structure">
+                        <h3>DataModel Contents</h3>
+                        <div class="code-block" style="margin-top: 15px;">
+DataModel = {
+  <span class="string">"breakfast_healthy_1"</span>: {
+    <span class="string">"components"</span>: {
+      <span class="string">"card_avocado_toast"</span>: {
+        <span class="string">"Card"</span>: {
+          <span class="string">"child"</span>: <span class="string">"column_avocado_toast"</span>
+        }
+      },
+      <span class="string">"column_avocado_toast"</span>: {
+        <span class="string">"Column"</span>: {
+          <span class="string">"alignment"</span>: <span class="string">"start"</span>,
+          <span class="string">"children"</span>: {
+            <span class="string">"explicitList"</span>: [
+              <span class="string">"title_avocado_toast"</span>,
+              <span class="string">"desc_avocado_toast"</span>,
+              <span class="string">"time_avocado_toast"</span>,
+              <span class="string">"ingredients_header"</span>,
+              <span class="string">"ingredients_list"</span>,
+              <span class="string">"nutrition_avocado_toast"</span>
+            ]
+          }
+        }
+      },
+      <span class="string">"title_avocado_toast"</span>: {
+        <span class="string">"Text"</span>: {
+          <span class="string">"text"</span>: {<span class="string">"literalString"</span>: <span class="string">"Avocado Toast with Poached Eggs"</span>},
+          <span class="string">"usageHint"</span>: <span class="string">"h2"</span>
+        }
+      },
+      <span class="string">"desc_avocado_toast"</span>: {
+        <span class="string">"Text"</span>: {
+          <span class="string">"text"</span>: {<span class="string">"literalString"</span>: <span class="string">"A nutritious breakfast..."</span>},
+          <span class="string">"usageHint"</span>: <span class="string">"body"</span>
+        }
+      },
+      <span class="comment">// ... all other components stored here</span>
+    }
+  }
+}</div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>🔍 Understanding DataModel:</strong>
+                        <p>• Think of it as a <strong>database/storage</strong> for UI components</p>
+                        <p>• Each surface has its own entry (key = surfaceId)</p>
+                        <p>• All components are stored with their IDs and definitions</p>
+                        <p>• Widgets can look up any component by ID anytime</p>
+                    </div>
+                    
+                    <ul class="bullet-list">
+                        <li><strong>Surface ID:</strong> "breakfast_healthy_1" - Acts as the main key</li>
+                        <li><strong>Components Map:</strong> All 8 components stored with their IDs</li>
+                        <li><strong>Relationships Preserved:</strong> Card references Column by ID, Column lists Text widget IDs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- STEP 4 -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <h2>beginRendering Triggers Build</h2>
+                <div class="step-content">
+                    <p>After storing components, AI calls another function: <strong>beginRendering</strong></p>
+                    
+                    <div class="code-block">
+                        <div class="code-label">AI's Second Function Call</div>
+<span class="function">FunctionCall</span>(
+  name: <span class="string">"beginRendering"</span>,
+  args: {
+    <span class="string">"root"</span>: <span class="string">"card_avocado_toast"</span>,
+    <span class="string">"surfaceId"</span>: <span class="string">"breakfast_healthy_1"</span>
+  }
+)</div>
+
+                    <div class="highlight-box">
+                        <strong>🎬 What This Does:</strong>
+                        <p>• <strong>root:</strong> "card_avocado_toast" - Start building from this component</p>
+                        <p>• <strong>surfaceId:</strong> "breakfast_healthy_1" - Which surface to render</p>
+                        <p>• This tells the SDK: <em>"Everything is ready, start building widgets!"</em></p>
+                    </div>
+                    
+                    <p><strong>What happens in the logs:</strong></p>
+                    <div class="code-block">
+                        <div class="code-label">Console Logs</div>
+[<span class="keyword">FINE</span>] Processing function call: <span class="function">beginRendering</span> with args: Struct()
+[<span class="keyword">FINE</span>] Invoking tool: <span class="function">beginRendering</span>
+[<span class="keyword">FINE</span>] Fetching surface notifier for <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">INFO</span>] Started rendering <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">INFO</span>] Invoked tool beginRendering with args {
+  root: <span class="string">card_avocado_toast</span>,
+  surfaceId: <span class="string">breakfast_healthy_1</span>
+}
+Result: {
+  status: <span class="string">"Surface breakfast_healthy_1 rendered and waiting for user input."</span>
+}</div>
+
+                    <div class="info-box">
+                        <strong>🚀 Behind the Scenes:</strong>
+                        <p>• GenUiManager finds the surface notifier for "breakfast_healthy_1"</p>
+                        <p>• Triggers a rebuild of the GenUiSurface widget</p>
+                        <p>• GenUiSurface will now start building Flutter widgets from the DataModel</p>
+                    </div>
+                    
+                    <ul class="bullet-list">
+                        <li><strong>Surface Notifier:</strong> A listener that tells Flutter "Hey, UI needs to update!"</li>
+                        <li><strong>Root Component:</strong> Starting point for building the widget tree</li>
+                        <li><strong>Ready State:</strong> All components are stored, now time to render them</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- STEP 5 -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <h2>GenUiSurface Builds Flutter Widgets</h2>
+                <div class="step-content">
+                    <p>Now the <strong>GenUiSurface</strong> widget starts building actual Flutter widgets from the component definitions in DataModel.</p>
+                    
+                    <p><strong>Step-by-step widget building (from logs):</strong></p>
+                    
+                    <div class="code-block">
+                        <div class="code-label">Console Logs - Widget Building</div>
+<span class="comment">// Step 1: Start building the surface</span>
+[<span class="keyword">FINE</span>] Outer Building surface <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">FINE</span>] Fetching surface notifier for <span class="string">breakfast_healthy_1</span>
+[<span class="keyword">FINE</span>] Building surface <span class="string">breakfast_healthy_1</span>
+
+<span class="comment">// Step 2: Build the root Card widget</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">card_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Card</span> with id card_avocado_toast
+
+<span class="comment">// Step 3: Build the Column inside Card</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">column_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Column</span> with id column_avocado_toast
+
+<span class="comment">// Step 4: Build the title Text widget</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">title_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id title_avocado_toast
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"Avocado Toast with Poached Eggs"</span>}, 
+  literalKey=literalString
+
+<span class="comment">// Step 5: Build the description Text widget</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">desc_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id desc_avocado_toast
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"A nutritious breakfast..."</span>}
+
+<span class="comment">// Step 6: Build the time Text widget</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">time_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id time_avocado_toast
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"Prep Time: 5 mins | Cook Time: 10 mins"</span>}
+
+<span class="comment">// Step 7: Build ingredients header</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">ingredients_header</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id ingredients_header
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"Key Ingredients:"</span>}
+
+<span class="comment">// Step 8: Build ingredients list</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">ingredients_list</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id ingredients_list
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"- Whole grain bread\n- Ripe avocado..."</span>}
+
+<span class="comment">// Step 9: Build nutrition info</span>
+[<span class="keyword">FINEST</span>] Building widget <span class="string">nutrition_avocado_toast</span>
+[<span class="keyword">INFO</span>] Building widget <span class="function">Text</span> with id nutrition_avocado_toast
+[<span class="keyword">INFO</span>] DataContext.subscribeToValue: 
+  ref={literalString: <span class="string">"Approx. 350 calories, 18g protein..."</span>}</div>
+
+                    <div class="highlight-box">
+                        <strong>🔨 Build Process Explained:</strong>
+                        <p>1. GenUiSurface looks up "breakfast_healthy_1" in DataModel</p>
+                        <p>2. Finds root component ID: "card_avocado_toast"</p>
+                        <p>3. Creates Flutter Card widget</p>
+                        <p>4. Card references "column_avocado_toast" as child</p>
+                        <p>5. Creates Flutter Column widget</p>
+                        <p>6. Column lists 6 children IDs</p>
+                        <p>7. Creates each Text widget in order</p>
+                        <p>8. Each Text subscribes to its data value</p>
+                    </div>
+                    
+                    <p><strong>What "DataContext.subscribeToValue" means:</strong></p>
+                    <div class="info-box">
+                        <strong>📊 Data Subscription:</strong>
+                        <p>• Each widget subscribes to its data in the DataModel</p>
+                        <p>• If data changes later, the widget automatically rebuilds</p>
+                        <p>• This is how reactive updates work in GenUI</p>
+                        <p>• Similar to setState() or StreamBuilder in Flutter</p>
+                    </div>
+                    
+                    <p><strong>The final Flutter widget tree that gets created:</strong></p>
+                    <div class="code-block">
+                        <div class="code-label">Equivalent Flutter Code</div>
+<span class="comment">// This is what GenUiSurface builds (conceptually)</span>
+<span class="function">Card</span>(
+  child: <span class="function">Column</span>(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      <span class="function">Text</span>(
+        <span class="string">"Avocado Toast with Poached Eggs"</span>,
+        style: Theme.of(context).textTheme.headline2,
+      ),
+      <span class="function">Text</span>(
+        <span class="string">"A nutritious breakfast with healthy fats and protein"</span>,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
+      <span class="function">Text</span>(
+        <span class="string">"Prep Time: 5 mins | Cook Time: 10 mins"</span>,
+        style: Theme.of(context).textTheme.caption,
+      ),
+      <span class="function">Text</span>(
+        <span class="string">"Key Ingredients:"</span>,
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      <span class="function">Text</span>(
+        <span class="string">"- Whole grain bread\n- Ripe avocado\n- Fresh eggs\n- Cherry tomatoes\n- Salt and pepper"</span>,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
+      <span class="function">Text</span>(
+        <span class="string">"Approx. 350 calories, 18g protein, 20g healthy fats"</span>,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
+    ],
+  ),
+)</div>
+
+                    <div class="highlight-box">
+                        <strong>✨ The Magic:</strong>
+                        <p>• AI designed this widget tree using <strong>catalog items</strong> (card, column, text)</p>
+                        <p>• Each catalog item has a <strong>builder function</strong> that creates the actual Flutter widget</p>
+                        <p>• GenUI SDK calls the builder: <code>cardCatalogItem.builder(data)</code></p>
+                        <p>• Builder returns: <code>Card(child: ...)</code> (actual Flutter widget)</p>
+                        <p>• No custom Dart code from you needed - catalog items handle everything!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- FINAL RESULT -->
+            <div class="final-result">
+                <h3>🎉 Final Result: UI Appears on Screen!</h3>
+                
+                <div class="recipe-card-demo">
+                    <h4>🥑 Avocado Toast with Poached Eggs</h4>
+                    <p>A nutritious breakfast with healthy fats and protein</p>
+                    <div class="recipe-meta">
+                        ⏱️ Prep Time: 5 mins | Cook Time: 10 mins
+                    </div>
+                    <div class="ingredients">
+                        <strong>Key Ingredients:</strong><br>
+                        - Whole grain bread<br>
+                        - Ripe avocado<br>
+                        - Fresh eggs<br>
+                        - Cherry tomatoes<br>
+                        - Salt and pepper
+                    </div>
+                    <div class="recipe-meta">
+                        📊 Approx. 350 calories, 18g protein, 20g healthy fats
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; font-size: 1.1em;">
+                    User sees this beautiful breakfast card rendered on their screen!
+                </p>
+            </div>
+            
+        </div>
+        
+        <!-- SUMMARY SECTION -->
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+            <h2 style="color: white; text-align: center; font-size: 2em; margin-bottom: 30px;">🎯 Complete Flow Summary</h2>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.4em;">Step 1: User Input</h3>
+                <p style="color: white; line-height: 1.8;">
+                    User types "Suggest a healthy breakfast" → Wrapped in UserMessage → Sent to GenUiConversation
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.4em;">Step 2: AI Response</h3>
+                <p style="color: white; line-height: 1.8;">
+                    AI returns surfaceUpdate with complete component tree (Card, Column, Text widgets) in JSON format
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.4em;">Step 3: Storage</h3>
+                <p style="color: white; line-height: 1.8;">
+                    GenUiManager stores all components in DataModel under surfaceId "breakfast_healthy_1"
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.4em;">Step 4: Trigger Render</h3>
+                <p style="color: white; line-height: 1.8;">
+                    AI calls beginRendering with root "card_avocado_toast" → Triggers GenUiSurface rebuild
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: white; margin-bottom: 15px; font-size: 1.4em;">Step 5: Build Widgets</h3>
+                <p style="color: white; line-height: 1.8;">
+                    GenUiSurface builds Flutter widgets from DataModel → Card → Column → 6 Text widgets → UI appears!
+                </p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 12px; margin-top: 30px; text-align: center;">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.6em;">💡 The Key Insight</h3>
+                <p style="color: white; font-size: 1.2em; line-height: 1.8;">
+                    <strong>You provide the catalog</strong> (18 built-in widgets: card, column, text, button, etc.)<br>
+                    <strong>AI is the UI architect.</strong> It picks and combines catalog items to build UIs.<br>
+                    <strong>GenUI SDK is the builder.</strong> It calls catalog item builders to create Flutter widgets.<br>
+                    <strong>No custom widgets needed!</strong> The default catalog covers most use cases.
+                </p>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
