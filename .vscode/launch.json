@@ -9,9 +9,8 @@
             "program": "lib/main.dart",
             "args": [
                 "-d",
-                "chrome",
-                "-D",
-                "GEMINI_API_KEY=AIzaSyBgKIaHJqU4SiLzOZtvAaug0eZlC3hEWps"
+                "chrome"
+               
             ]
         }
     ]

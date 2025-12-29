@@ -5,7 +5,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:genui/genui.dart';
-import 'package:genui_sdk_demo/chat_screen.dart';
+import 'package:genui_sdk_demo/custom_catalog/custom_catalog.dart';
+import 'package:genui_sdk_demo/custom_catalog/custom_chat_screen.dart';
 import 'package:logging/logging.dart';
 
 import 'configuration.dart';
@@ -71,7 +72,8 @@ class DefaultOrCustomCatalogScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ChatScreen()),
+                  // MaterialPageRoute(builder: (context) => const ChatScreen()),
+                  MaterialPageRoute(builder: (context) => CustomChatScreen()),
                 );
               },
               child: Container(
@@ -92,7 +94,20 @@ class DefaultOrCustomCatalogScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CustomChatScreen(
+                      customCatalogItems: [
+                        recipeCard,
+                        ingredientList,
+                        nutritionInfo,
+                      ],
+                    ),
+                  ),
+                );
+              },
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -100,7 +115,7 @@ class DefaultOrCustomCatalogScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
-                  'GenUI Catalog - Custom Catalog Demo - Upcoming Sessions',
+                  'GenUI Catalog - Custom Catalog Demo',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

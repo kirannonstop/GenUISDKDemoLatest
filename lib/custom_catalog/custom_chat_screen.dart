@@ -9,14 +9,18 @@ import 'package:genui_sdk_demo/constants.dart';
 import 'package:genui_sdk_demo/io_get_api_key.dart';
 import 'package:genui_sdk_demo/message.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class CustomChatScreen extends StatefulWidget {
+  /// Optional list of custom catalog items to add to the core catalog
+  /// If empty, uses only CoreCatalogItems
+  final List<CatalogItem> customCatalogItems;
+
+  const CustomChatScreen({super.key, this.customCatalogItems = const []});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<CustomChatScreen> createState() => _CustomChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _CustomChatScreenState extends State<CustomChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<MessageController> _messages = [];
   late final GenUiConversation _genUiConversation;
@@ -26,7 +30,12 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    final Catalog catalog = CoreCatalogItems.asCatalog();
+
+    // Create catalog with custom items if provided (like riddleCard example)
+    final Catalog catalog = widget.customCatalogItems.isEmpty
+        ? CoreCatalogItems.asCatalog()
+        : CoreCatalogItems.asCatalog().copyWith(widget.customCatalogItems);
+
     _a2uiMessageProcessor = A2uiMessageProcessor(catalogs: [catalog]);
 
     final systemInstruction =
@@ -67,8 +76,7 @@ For each dish, create an attractive UI card that includes:
 - Visual indicators for dietary preferences (vegetarian, vegan, gluten-free, etc.)
 ${GenUiPromptFragments.basicChat}
 ''';
-    // ${PromptConstants.interactiveButtonPrompt}
-    // ${PromptConstants.userInputPrompt}
+
     // Create the appropriate content generator based on configuration
     final ContentGenerator contentGenerator = switch (aiBackend) {
       AiBackend.googleGenerativeAi => () {
