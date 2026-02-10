@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenUI Custom Catalog - Complete Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        .hero-section p {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .comparison-box {
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid;
+        }
+        
+        .comparison-box.default {
+            border-color: #4caf50;
+            background: #f1f8f4;
+        }
+        
+        .comparison-box.custom {
+            border-color: #ff9800;
+            background: #fff8f0;
+        }
+        
+        .comparison-box h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .comparison-box ul {
+            margin-left: 25px;
+            line-height: 2;
+        }
+        
+        .step-section {
+            margin: 50px 0;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 6px solid #ff9800;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .step h2 {
+            color: #ff9800;
+            margin-bottom: 20px;
+            margin-left: 70px;
+            font-size: 1.8em;
+        }
+        
+        .step p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .code-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #ff9800;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; font-style: italic; }
+        .function { color: #50fa7b; }
+        .class-name { color: #8be9fd; }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .highlight-box strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box strong {
+            color: #1565c0;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 3em;
+            color: #ff9800;
+            margin: 20px 0;
+        }
+        
+        .widget-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .recipe-card-demo {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .recipe-header {
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            color: white;
+            padding: 20px;
+        }
+        
+        .recipe-body {
+            padding: 20px;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .chip {
+            background: #fff3e0;
+            border: 1px solid #ff9800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #e65100;
+        }
+        
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .flow-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #ff9800;
+        }
+        
+        .flow-box h4 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+        
+        .bullet-list {
+            margin: 15px 0 15px 30px;
+            line-height: 2;
+        }
+        
+        .internal-process {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .internal-process h3 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 GenUI Custom Catalog - Complete Flow</h1>
+        
+        <div class="hero-section">
+            <h2>Creating Your Own Custom Widgets</h2>
+            <p>Instead of using GenUI's default catalog (card, column, text),<br>
+            you can create <strong>custom widgets</strong> (RecipeCard, IngredientList, NutritionInfo)<br>
+            and let AI use them!</p>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="comparison-box default">
+                <h3>🔧 Default Catalog</h3>
+                <ul>
+                    <li>18 pre-built widgets</li>
+                    <li>card, column, text, button, etc.</li>
+                    <li>AI composes them together</li>
+                    <li>Generic UI appearance</li>
+                    <li>No custom code needed</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-box custom">
+                <h3>🎨 Custom Catalog</h3>
+                <ul>
+                    <li>You create custom widgets</li>
+                    <li>RecipeCard, IngredientList, etc.</li>
+                    <li>AI fills in the data</li>
+                    <li>Branded, custom designs</li>
+                    <li>Full control over UI/UX</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- STEP 1: Create Widget -->
+        <div class="step-section">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h2>Create Your Custom Flutter Widget</h2>
+                
+                <p>First, build a normal Flutter widget with all the properties you want:</p>
+                
+                <div class="code-block">
+                    <div class="code-label">RecipeCard Widget (Flutter)</div>
+<span class="keyword">class</span> <span class="class-name">RecipeCard</span> <span class="keyword">extends</span> <span class="class-name">StatelessWidget</span> {
+  <span class="keyword">final</span> String dishName;
+  <span class="keyword">final</span> String description;
+  <span class="keyword">final</span> String mealType;
+  <span class="keyword">final</span> <span class="keyword">int</span> prepTime;
+  <span class="keyword">final</span> <span class="keyword">int</span> cookTime;
+  <span class="keyword">final</span> List&lt;String&gt; ingredients;
+  <span class="keyword">final</span> VoidCallback? onSaveFavorite;
+  <span class="keyword">final</span> VoidCallback? onGetRecipe;
+  
+  <span class="keyword">const</span> <span class="function">RecipeCard</span>({
+    <span class="keyword">required</span> <span class="keyword">this</span>.dishName,
+    <span class="keyword">required</span> <span class="keyword">this</span>.description,
+    <span class="comment">// ... other required params</span>
+  });
+  
+  @override
+  Widget <span class="function">build</span>(BuildContext context) {
+    <span class="keyword">return</span> <span class="function">Card</span>(
+      child: <span class="function">Column</span>(
+        children: [
+          <span class="comment">// Beautiful header with gradient</span>
+          <span class="function">Container</span>(
+            decoration: <span class="function">BoxDecoration</span>(
+              gradient: <span class="function">LinearGradient</span>(
+                colors: [Colors.orange.shade400, Colors.orange.shade600],
+              ),
+            ),
+            child: <span class="function">Text</span>(dishName),
+          ),
+          
+          <span class="comment">// Time info, calories, ingredients</span>
+          <span class="comment">// Action buttons: Save, Recipe, etc.</span>
+        ],
+      ),
+    );
+  }
+}</div>
+
+                <div class="highlight-box">
+                    <strong>✅ What You Did:</strong>
+                    <p>• Created a custom Flutter widget with your own design</p>
+                    <p>• Added all properties (dishName, prepTime, etc.)</p>
+                    <p>• Designed beautiful UI with gradients, chips, buttons</p>
+                    <p>• Added callback functions for button actions</p>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- STEP 2: Create Catalog Item -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <h2>Wrap Widget in CatalogItem</h2>
+                
+                <p>Now, create a <code>CatalogItem</code> that tells GenUI SDK about your widget:</p>
+                
+                <div class="code-block">
+                    <div class="code-label">CatalogItem Definition</div>
+<span class="keyword">final</span> recipeCard = <span class="function">CatalogItem</span>(
+  <span class="comment">// 1. Name that AI will use to reference this widget</span>
+  name: <span class="string">'RecipeCard'</span>,
+  
+  <span class="comment">// 2. Schema defining what data this widget needs</span>
+  dataSchema: S.<span class="function">object</span>(
+    properties: {
+      <span class="string">'dishName'</span>: A2uiSchemas.<span class="function">stringReference</span>(
+        description: <span class="string">'Name of the dish'</span>
+      ),
+      <span class="string">'description'</span>: A2uiSchemas.<span class="function">stringReference</span>(
+        description: <span class="string">'Brief description'</span>
+      ),
+      <span class="string">'prepTime'</span>: A2uiSchemas.<span class="function">stringReference</span>(
+        description: <span class="string">'Preparation time'</span>
+      ),
+      <span class="string">'cookTime'</span>: A2uiSchemas.<span class="function">stringReference</span>(
+        description: <span class="string">'Cooking time'</span>
+      ),
+      <span class="string">'mealType'</span>: A2uiSchemas.<span class="function">stringReference</span>(
+        description: <span class="string">'breakfast, lunch, dinner, snack'</span>
+      ),
+    },
+    required: [<span class="string">'dishName'</span>, <span class="string">'description'</span>],
+  ),
+  
+  <span class="comment">// 3. Builder function that creates your widget</span>
+  widgetBuilder: (context) {
+    <span class="keyword">final</span> data = context.data <span class="keyword">as</span> Map&lt;String, Object?&gt;?;
+    
+    <span class="comment">// Subscribe to data values (reactive updates)</span>
+    <span class="keyword">final</span> dishNameNotifier = context.dataContext
+        .<span class="function">subscribeToString</span>(data?[<span class="string">'dishName'</span>] <span class="keyword">as</span> Map?);
+    <span class="keyword">final</span> descriptionNotifier = context.dataContext
+        .<span class="function">subscribeToString</span>(data?[<span class="string">'description'</span>] <span class="keyword">as</span> Map?);
+    
+    <span class="comment">// Return your custom widget wrapped in ValueListenableBuilder</span>
+    <span class="keyword">return</span> <span class="function">ValueListenableBuilder</span>&lt;String?&gt;(
+      valueListenable: dishNameNotifier,
+      builder: (context, dishName, _) {
+        <span class="keyword">return</span> <span class="function">ValueListenableBuilder</span>&lt;String?&gt;(
+          valueListenable: descriptionNotifier,
+          builder: (context, description, _) {
+            <span class="keyword">return</span> <span class="function">RecipeCard</span>(
+              dishName: dishName ?? <span class="string">''</span>,
+              description: description ?? <span class="string">''</span>,
+              <span class="comment">// ... other properties</span>
+            );
+          },
+        );
+      },
+    );
+  },
+);</div>
+
+                <div class="highlight-box">
+                    <strong>🔑 Key Components of CatalogItem:</strong>
+                    <p><strong>1. name:</strong> "RecipeCard" - AI uses this to reference your widget</p>
+                    <p><strong>2. dataSchema:</strong> JSON schema defining what data your widget needs</p>
+                    <p><strong>3. widgetBuilder:</strong> Function that builds your Flutter widget from data</p>
+                </div>
+                
+                <div class="info-box">
+                    <strong>💡 What's Happening:</strong>
+                    <p><strong>dataSchema</strong> tells AI: "RecipeCard needs dishName, description, prepTime, etc."</p>
+                    <p><strong>subscribeToString()</strong> creates reactive listeners for data changes</p>
+                    <p><strong>ValueListenableBuilder</strong> rebuilds widget when data changes</p>
+                    <p><strong>widgetBuilder</strong> extracts data and passes it to your RecipeCard widget</p>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- STEP 3: Register in Catalog -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <h2>Add to Catalog & Pass to GenUiConversation</h2>
+                
+                <p>Create a catalog with your custom widgets and pass it to GenUiConversation:</p>
+                
+                <div class="code-block">
+                    <div class="code-label">Initialize GenUI with Custom Catalog</div>
+<span class="comment">// Create custom catalog items</span>
+<span class="keyword">final</span> recipeCard = <span class="function">CatalogItem</span>(<span class="comment">/* ... */</span>);
+<span class="keyword">final</span> ingredientList = <span class="function">CatalogItem</span>(<span class="comment">/* ... */</span>);
+<span class="keyword">final</span> nutritionInfo = <span class="function">CatalogItem</span>(<span class="comment">/* ... */</span>);
+
+<span class="comment">// Create catalog combining default + custom items</span>
+<span class="keyword">final</span> customCatalog = <span class="function">Catalog</span>([
+  <span class="comment">// Include default catalog items (card, column, text, etc.)</span>
+  ...CoreCatalog.<span class="function">asCatalog</span>().items,
+  
+  <span class="comment">// Add your custom items</span>
+  recipeCard,
+  ingredientList,
+  nutritionInfo,
+]);
+
+<span class="comment">// Initialize GenUiConversation with custom catalog</span>
+<span class="keyword">final</span> _genUiConversation = <span class="function">GenUiConversation</span>(
+  contentGenerator: myContentGenerator,
+  catalog: customCatalog,  <span class="comment">// ← Your custom catalog!</span>
+);</div>
+
+                <div class="highlight-box">
+                    <strong>✅ What Happened:</strong>
+                    <p>• Combined default catalog items (18 widgets) with your 3 custom widgets</p>
+                    <p>• Now AI has access to 21 total widgets!</p>
+                    <p>• AI can choose to use RecipeCard, IngredientList, or NutritionInfo</p>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- STEP 4: AI Uses Your Widget -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <h2>User Asks → AI Uses Your Custom Widget</h2>
+                
+                <p>User types: <strong>"Suggest a healthy breakfast"</strong></p>
+                
+                <p><strong>What gets sent to AI:</strong></p>
+                <div class="code-block">
+                    <div class="code-label">Sent to Google AI</div>
+{
+  <span class="string">"tools"</span>: [
+    <span class="comment">// Default catalog items</span>
+    {<span class="string">"name"</span>: <span class="string">"card"</span>, <span class="string">"schema"</span>: {<span class="comment">...</span>}},
+    {<span class="string">"name"</span>: <span class="string">"column"</span>, <span class="string">"schema"</span>: {<span class="comment">...</span>}},
+    {<span class="string">"name"</span>: <span class="string">"text"</span>, <span class="string">"schema"</span>: {<span class="comment">...</span>}},
+    
+    <span class="comment">// YOUR CUSTOM ITEMS!</span>
+    {
+      <span class="string">"name"</span>: <span class="string">"RecipeCard"</span>,
+      <span class="string">"schema"</span>: {
+        <span class="string">"properties"</span>: {
+          <span class="string">"dishName"</span>: {<span class="string">"type"</span>: <span class="string">"string"</span>},
+          <span class="string">"description"</span>: {<span class="string">"type"</span>: <span class="string">"string"</span>},
+          <span class="string">"prepTime"</span>: {<span class="string">"type"</span>: <span class="string">"string"</span>},
+          <span class="comment">// ...</span>
+        }
+      }
+    },
+    {<span class="string">"name"</span>: <span class="string">"IngredientList"</span>, <span class="comment">...</span>},
+    {<span class="string">"name"</span>: <span class="string">"NutritionInfo"</span>, <span class="comment">...</span>}
+  ],
+  <span class="string">"messages"</span>: [
+    {<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"text"</span>: <span class="string">"Suggest a healthy breakfast"</span>}
+  ]
+}</div>
+
+                <p><strong>AI thinks:</strong> <em>"I see a RecipeCard widget! Perfect for showing breakfast suggestions!"</em></p>
+                
+                <p><strong>AI returns:</strong></p>
+                <div class="code-block">
+                    <div class="code-label">AI Response</div>
+<span class="function">FunctionCall</span>(
+  name: <span class="string">"surfaceUpdate"</span>,
+  args: {
+    <span class="string">"surfaceId"</span>: <span class="string">"breakfast_1"</span>,
+    <span class="string">"components"</span>: [
+      {
+        <span class="string">"id"</span>: <span class="string">"recipe_avocado_toast"</span>,
+        <span class="string">"component"</span>: {
+          <span class="string">"RecipeCard"</span>: {  <span class="comment">// ← AI chose YOUR custom widget!</span>
+            <span class="string">"dishName"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Avocado Toast with Poached Eggs"</span>
+            },
+            <span class="string">"description"</span>: {
+              <span class="string">"literalString"</span>: <span class="string">"Nutritious breakfast with healthy fats"</span>
+            },
+            <span class="string">"prepTime"</span>: {<span class="string">"literalString"</span>: <span class="string">"5 mins"</span>},
+            <span class="string">"cookTime"</span>: {<span class="string">"literalString"</span>: <span class="string">"10 mins"</span>},
+            <span class="string">"mealType"</span>: {<span class="string">"literalString"</span>: <span class="string">"breakfast"</span>}
+          }
+        }
+      }
+    ]
+  }
+)</div>
+
+                <div class="highlight-box">
+                    <strong>🎯 Key Point:</strong>
+                    <p>• AI chose to use <strong>"RecipeCard"</strong> (your custom widget!)</p>
+                    <p>• AI filled in all the data: dishName, description, prepTime, etc.</p>
+                    <p>• AI knows the schema, so it knows what data RecipeCard needs</p>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- STEP 5: SDK Builds Your Widget -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <h2>GenUI SDK Builds Your Custom Widget</h2>
+                
+                <p><strong>Internal Process:</strong></p>
+                
+                <div class="internal-process">
+                    <h3>🔄 What Happens Inside GenUI SDK</h3>
+                    
+                    <div class="flow-diagram">
+                        <div class="flow-box">
+                            <h4>Step 1: GenUiManager Receives Component</h4>
+                            <p>• Sees component name: "RecipeCard"</p>
+                            <p>• Stores component data in DataModel</p>
+                        </div>
+                        
+                        <div class="flow-box">
+                            <h4>Step 2: GenUiSurface Looks Up Catalog</h4>
+                            <p>• Searches catalog for "RecipeCard"</p>
+                            <p>• Finds YOUR CatalogItem definition</p>
+                        </div>
+                        
+                        <div class="flow-box">
+                            <h4>Step 3: Calls widgetBuilder</h4>
+                            <p>• Calls: <code>recipeCard.widgetBuilder(context)</code></p>
+                            <p>• Passes component data as context.data</p>
+                        </div>
+                        
+                        <div class="flow-box">
+                            <h4>Step 4: Your Builder Runs</h4>
+                            <p>• Extracts data: dishName, description, etc.</p>
+                            <p>• Creates ValueListenableBuilders for reactivity</p>
+                            <p>• Returns your RecipeCard widget!</p>
+                        </div>
+                        
+                        <div class="flow-box">
+                            <h4>Step 5: Widget Appears!</h4>
+                            <p>• Your beautiful custom RecipeCard renders</p>
+                            <p>• User sees gradient header, chips, buttons</p>
+                            <p>• Everything styled exactly as you designed!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-label">Console Logs</div>
+[<span class="keyword">FINE</span>] Building widget <span class="string">recipe_avocado_toast</span>
+[<span class="keyword">INFO</span>] Looking up catalog item: <span class="string">RecipeCard</span>
+[<span class="keyword">INFO</span>] Found custom catalog item: <span class="string">RecipeCard</span>
+[<span class="keyword">INFO</span>] Calling widgetBuilder for RecipeCard
+[<span class="keyword">INFO</span>] DataContext.subscribeToString: dishName
+[<span class="keyword">INFO</span>] DataContext.subscribeToString: description
+[<span class="keyword">INFO</span>] Building custom widget: RecipeCard</div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- FINAL RESULT -->
+            <div class="widget-preview">
+                <h3 style="color: white; text-align: center; margin-bottom: 20px; font-size: 1.8em;">
+                    🎉 Final Result: Your Custom Widget!
+                </h3>
+                
+                <div class="recipe-card-demo">
+                    <div class="recipe-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 style="margin: 0; font-size: 1.5em;">🥑 Avocado Toast with Poached Eggs</h3>
+                            <span style="background: rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 20px; font-size: 0.9em;">
+                                🌅 BREAKFAST
+                            </span>
+                        </div>
+                        <p style="margin: 0; opacity: 0.9;">Nutritious breakfast with healthy fats and protein</p>
+                    </div>
+                    
+                    <div class="recipe-body">
+                        <div class="recipe-meta">
+                            <span class="chip">⏱️ Prep: 5 mins</span>
+                            <span class="chip">🍳 Cook: 10 mins</span>
+                            <span class="chip">🔥 350 cal</span>
+                            <span class="chip">💪 18g protein</span>
+                        </div>
+                        
+                        <div style="margin: 20px 0;">
+                            <strong>Key Ingredients:</strong>
+                            <ul style="margin: 10px 0 10px 20px; line-height: 1.8;">
+                                <li>Whole grain bread</li>
+                                <li>Ripe avocado</li>
+                                <li>Fresh eggs</li>
+                                <li>Cherry tomatoes</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+                            <button style="background: #ff5252; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                ❤️ Save
+                            </button>
+                            <button style="background: #ff9800; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                📝 Recipe
+                            </button>
+                            <button style="background: white; color: #666; border: 2px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                🔄 Substitutions
+                            </button>
+                            <button style="background: white; color: #666; border: 2px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                ⚡ Quick
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="color: white; text-align: center; margin-top: 20px; font-size: 1.2em;">
+                    ✨ This is YOUR custom RecipeCard widget with your exact design!
+                </p>
+            </div>
+        </div>
+        
+        <!-- Summary Section -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 15px; margin-top: 50px;">
+            <h2 style="text-align: center; font-size: 2em; margin-bottom: 30px;">🎯 Summary: How Custom Catalog Works</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px;">
+                    <h3 style="margin-bottom: 15px;">👨‍💻 What You Do</h3>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>Create custom Flutter widget</li>
+                        <li>Define CatalogItem with schema</li>
+                        <li>Add widgetBuilder function</li>
+                        <li>Register in custom catalog</li>
+                        <li>Pass to GenUiConversation</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px;">
+                    <h3 style="margin-bottom: 15px;">🤖 What AI Does</h3>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>Sees your catalog items in tools</li>
+                        <li>Chooses RecipeCard for recipes</li>
+                        <li>Fills in all the data fields</li>
+                        <li>Returns component structure</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin-top: 25px;">
+                <h3 style="margin-bottom: 15px;">⚙️ What GenUI SDK Does</h3>
+                <ul style="line-height: 2; margin-left: 20px;">
+                    <li>Receives component: {"RecipeCard": {dishName: "...", ...}}</li>
+                    <li>Looks up "RecipeCard" in your catalog</li>
+                    <li>Calls your widgetBuilder with data</li>
+                    <li>Your builder returns RecipeCard widget</li>
+                    <li>Widget appears with your custom design!</li>
+                </ul>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 12px; margin-top: 30px; text-align: center;">
+                <h3 style="font-size: 1.6em; margin-bottom: 15px;">💡 The Power of Custom Catalog</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    <strong>AI becomes a data provider</strong> for YOUR widgets.<br>
+                    You control the design, AI controls the content.<br>
+                    Perfect combination of <strong>AI intelligence</strong> + <strong>Custom UX!</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

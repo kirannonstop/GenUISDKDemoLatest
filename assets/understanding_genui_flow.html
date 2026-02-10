@@ -281,7 +281,7 @@
                 <div class="concept-box">
                     <div class="concept-title">
                         <span class="icon">🎭</span>
-                        GenUiManager
+                        A2uiMessageProcessor
                     </div>
                     <div class="concept-desc">
                         <strong>Role:</strong> The State Manager<br>
@@ -314,7 +314,7 @@
             <div class="concept-box">
                 <div class="concept-title">📨 A2uiMessage: { surfaceId, component, data }</div>
                 <div class="concept-desc">
-                    → <span class="highlight">GenUiManager</span> understands this<br>
+                    → <span class="highlight">A2uiMessageProcessor</span> understands this<br>
                     → Stores in <span class="highlight">DataModel</span> using <span class="highlight">surfaceId</span> as key<br>
                     → Tells <span class="highlight">GenUiSurface</span> to rebuild
                 </div>
@@ -465,7 +465,7 @@ A2uiMessage(
 
 // Emits on stream → GenUiConversation receives it
                     </div>
-                    <p><strong>Who understands A2uiMessage?</strong> GenUiManager! GenUiConversation forwards it there.</p>
+                    <p><strong>Who understands A2uiMessage?</strong> A2uiMessageProcessor! GenUiConversation forwards it there.</p>
                 </div>
             </div>
             
@@ -474,12 +474,12 @@ A2uiMessage(
             <div class="step-card" onclick="toggleStep(6)">
                 <div class="step-header">
                     <div class="step-number">6</div>
-                    <div class="step-title">💾 GenUiManager Stores in DataModel</div>
+                    <div class="step-title">💾 A2uiMessageProcessor Stores in DataModel</div>
                 </div>
                 <div class="step-content" id="step6" style="display: none;">
-                    <p><strong>What happens:</strong> GenUiManager processes A2uiMessage and updates DataModel</p>
+                    <p><strong>What happens:</strong> A2uiMessageProcessor processes A2uiMessage and updates DataModel</p>
                     <div class="code-example">
-// GenUiManager.handleMessage():
+// A2uiMessageProcessor.handleMessage():
 void handleMessage(A2uiMessage msg) {
   // Store in DataModel using surfaceId as key
   _dataModel[msg.surfaceId] = {
@@ -604,9 +604,9 @@ context.dispatchEvent('get_recipe')
   ↓
 GenUiSurface captures event
   ↓
-Forwards to GenUiManager
+Forwards to A2uiMessageProcessor
   ↓
-GenUiManager creates new UserMessage:
+A2uiMessageProcessor creates new UserMessage:
 UserMessage([
   TextPart("User clicked 'get_recipe' on Avocado Toast"),
   DataPart(currentDataModel)  // Current state
@@ -625,8 +625,8 @@ Back to Step 2! (GenUiConversation processes it)
             <div class="concept-box">
                 <p><strong>🎯 GenUiConversation:</strong> The mediator/orchestrator. Manages the entire conversation loop.</p>
                 <p><strong>🔌 ContentGenerator:</strong> The AI provider connector. Talks to Google AI/Firebase AI.</p>
-                <p><strong>💾 GenUiManager:</strong> The state manager. Handles A2uiMessages and manages DataModel.</p>
-                <p><strong>📨 A2uiMessage:</strong> AI's instructions to create UI. Only GenUiManager understands it.</p>
+                <p><strong>💾 A2uiMessageProcessor:</strong> The state manager. Handles A2uiMessages and manages DataModel.</p>
+                <p><strong>📨 A2uiMessage:</strong> AI's instructions to create UI. Only A2uiMessageProcessor understands it.</p>
                 <p><strong>🗄️ DataModel:</strong> Storage for all UI state, indexed by surfaceId.</p>
                 <p><strong>🪪 surfaceId:</strong> Unique ID for each widget (like "recipe_breakfast_1").</p>
                 <p><strong>🎨 GenUiSurface:</strong> Widget that renders by looking up surfaceId in DataModel.</p>

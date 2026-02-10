@@ -31,7 +31,7 @@ class _CustomChatScreenState extends State<CustomChatScreen> {
   void initState() {
     super.initState();
 
-    // Create catalog with custom items if provided (like riddleCard example)
+    // Create catalog with custom items if provided
     final Catalog catalog = widget.customCatalogItems.isEmpty
         ? CoreCatalogItems.asCatalog()
         : CoreCatalogItems.asCatalog().copyWith(widget.customCatalogItems);
