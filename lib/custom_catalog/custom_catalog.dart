@@ -183,6 +183,10 @@ final ingredientList = CatalogItem(
         ),
         description: 'List of ingredients',
       ),
+      'साहित्य': S.list(
+        items: A2uiSchemas.stringReference(description: 'साहित्य'),
+        description: 'List of ingredients in Marathi',
+      ),
     },
     required: ['ingredients'],
   ),
@@ -194,6 +198,7 @@ final ingredientList = CatalogItem(
     );
 
     final ingredientsList = data?['ingredients'] as List?;
+    final marathiIngredientsList = data?['साहित्य'] as List?;
 
     return ValueListenableBuilder<String?>(
       valueListenable: titleNotifier,
@@ -214,6 +219,31 @@ final ingredientList = CatalogItem(
                 const SizedBox(height: 8),
                 if (ingredientsList != null)
                   ...ingredientsList.map((ingredient) {
+                    final ingredientMap = ingredient as Map<String, Object?>?;
+                    final ingredientNotifier = catalogContext.dataContext
+                        .subscribeToString(ingredientMap);
+                    return ValueListenableBuilder<String?>(
+                      valueListenable: ingredientNotifier,
+                      builder: (buildContext, ingredientText, _) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.check_circle_outline,
+                                size: 16,
+                                color: Colors.green,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(child: Text(ingredientText ?? '')),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                if (marathiIngredientsList != null)
+                  ...marathiIngredientsList.map((ingredient) {
                     final ingredientMap = ingredient as Map<String, Object?>?;
                     final ingredientNotifier = catalogContext.dataContext
                         .subscribeToString(ingredientMap);
